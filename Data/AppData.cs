@@ -10,19 +10,16 @@ namespace WebUISeleniumAutomation_saucedemo.com.Data
     public class AppData
     {
         private List<Product> _products;
+        private DataHelper _dataHelper = new DataHelper();
+        public AppData(){LoadProductData();}
 
-        // Constructor to load product data from JSON file
-        public AppData()
+        private void LoadProductData() //swap from json to api when built
         {
-            LoadProductData();
-        }
+            _dataHelper.ConvertProductDataToJson();
 
-        // Load product data from JSON file
-        private void LoadProductData()
-        {
             try
             {
-                string json = File.ReadAllText("productdata.json");
+                string json = File.ReadAllText("Data/productdata.json");
                 _products = JsonSerializer.Deserialize<List<Product>>(json);
             }
             catch (Exception ex)
@@ -32,21 +29,9 @@ namespace WebUISeleniumAutomation_saucedemo.com.Data
             }
         }
 
-        public List<Product> GetAllProducts()
-        {
-            return _products;
-        }
-
-        public Product GetProductById(string id)
-        {
-            return _products.Find(p => p.Id == id);
-        }
-
-        public Product GetProductByTitle(string title)
-        {
-            return _products.Find(p => p.Title == title);
-        }
-
+        public List<Product> GetAllProducts(){return _products;}
+        public Product GetProductById(string id){return _products.Find(p => p.Id == id);}
+        public Product GetProductByTitle(string title){return _products.Find(p => p.Title == title);}
         public Product GetProductByIndex(int index)
         {
             if (index >= 0 && index < _products.Count)

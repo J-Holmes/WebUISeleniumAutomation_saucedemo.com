@@ -16,11 +16,11 @@ namespace WebUISeleniumAutomation_saucedemo.com.Data
         public string Price { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        public string TitleXPath { get; set; }
-        public string PriceXPath { get; set; }
-        public string DescriptionXPath { get; set; }
-        public string ImageXPath { get; set; }
-        public string AddToCartButtonXPath { get; set; }
+        public string? TitleXPath { get; set; }
+        public string? PriceXPath { get; set; }
+        public string? DescriptionXPath { get; set; }
+        public string? ImageXPath { get; set; }
+        public string? AddToCartButtonXPath { get; set; }
 
     }
 }

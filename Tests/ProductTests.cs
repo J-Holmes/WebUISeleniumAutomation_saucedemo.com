@@ -29,7 +29,6 @@ namespace WebUISeleniumAutomation_saucedemo.com.Tests
             // Initialize pages
             _loginPage = new LoginPage(_driver);
             _productPage = new ProductPage(_driver);
-            _data = new AppData();
 
             // Log in to the application
             _loginPage.NavigateToLoginPage(ConfigHelper.WebsiteUrl);
@@ -46,34 +45,20 @@ namespace WebUISeleniumAutomation_saucedemo.com.Tests
             _driver?.Dispose();
         }
 
-        [Test]
-        public void verifyAllProdutTitles() { 
-            var allProducts = _data.GetAllProducts();
-            foreach (var product in allProducts)
-            {
-                _productPage.verifyProductTitle(product.Title);
-            }   
+        //test title 0
+        public void verifyItemZeroTitle () //separate test data and product data for compar
+        {
+            _productPage.getProductById("0");
+
         }
+           
+        //test title 1
+        //test title 2
+        //test title 3
+        //test title 4
+        //test title 5
+        //test title 6
 
-        //[Test]
-        //public void VerifyItemZeroDetailsAndAddToCart()
-        //{
-
-        //    string productName = "Sauce Labs Backpack";
-        //    string expectedPrice = "$29.99";
-
-        //    // Verify product name
-        //    string actualName = _productPage.GetProductName(productName);
-        //    Assert.That(actualName, Is.EqualTo(productName), $"Product name is incorrect. Expected: {productName}, Actual: {actualName}");
-
-        //    // Verify product price
-        //    string actualPrice = _productPage.GetProductPrice(productName);
-        //    Assert.That(actualPrice, Is.EqualTo(expectedPrice), $"Product price is incorrect. Expected: {expectedPrice}, Actual: {actualPrice}");
-
-        //    // Add product to cart
-        //    _productPage.AddProductToCart(productName);
-        //    Console.WriteLine($"Added {productName} to cart.");
-        //}
 
 
     }
