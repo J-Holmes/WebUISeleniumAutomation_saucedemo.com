@@ -13,7 +13,7 @@ namespace WebUISeleniumAutomation_saucedemo.com.Data
         private DataHelper _dataHelper = new DataHelper();
         public AppData(){LoadProductData();}
 
-        private void LoadProductData() //swap from json to api when built
+        public void LoadProductData() //swap from json to api when built
         {
             _dataHelper.ConvertProductDataToJson();
 
@@ -30,7 +30,7 @@ namespace WebUISeleniumAutomation_saucedemo.com.Data
         }
 
         public List<Product> GetAllProducts(){return _products;}
-        public Product GetProductById(string id){return _products.Find(p => p.Id == id);}
+        //public Product GetProductById(string id){return _products.Find(p => p.Id == id);}
         public Product GetProductByTitle(string title){return _products.Find(p => p.Title == title);}
         public Product GetProductByIndex(int index)
         {

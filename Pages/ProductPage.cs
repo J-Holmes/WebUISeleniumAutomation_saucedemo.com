@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework.Internal;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,39 @@ namespace WebUISeleniumAutomation_saucedemo.com.Pages
         public ProductPage(IWebDriver driver) { _driver = driver; }
 
         // Functions
-        public void getAllProducts (){var allProducts = _data.GetAllProducts();}
-        public void getProductById(string id) { var product = _data.GetProductById(id); }
-        public bool verifyProductTitle(string id)
+        public List<Product> GenerateProductListFromUI()
         {
-            var product = _data.GetProductById(id);
-            IWebElement productTitleXPath = _driver.FindElement(By.XPath(product.TitleXPath));
-            string uiProductTitle = productTitleXPath.Text;
-            return product.Title == uiProductTitle;
+            List<Product> productList = new List<Product>();
+            var productContainers = _driver.FindElements(By.ClassName("inventory_item")); // Find all inventory items displayed on the page
+
+            foreach (var productContainer in productContainers)
+            {
+                try
+                {
+                    string productTitle = productContainer.FindElement(By.ClassName("inventory_item_name")).Text;
+                    string productDescription = productContainer.FindElement(By.ClassName("inventory_item_description")).FindElement(By.ClassName("inventory_item_desc")).Text;
+                    string productPrice = productContainer.FindElement(By.ClassName("inventory_item_price")).Text;
+                    string productImage = productContainer.FindElement(By.ClassName("inventory_item_img")).FindElement(By.ClassName("inventory_item_img")).GetAttribute("src");
+
+                    Product product = new Product
+                    {
+                        Title = productTitle,
+                        Price = productPrice,
+                        Description = productDescription,
+                        Image = productImage,
+                    };
+                    productList.Add(product);
+                }
+                catch (NoSuchElementException ex)
+                {
+                    Console.WriteLine($"Error extracting product details: {ex.Message}");
+                }
+            } //end foreach
+            return productList;
         }
 
-        public void CloseBrowser() { _driver.Quit(); }
-
-
+        public List<Product> GenerateProductListFromData(){return _data.GetAllProducts();}
+        public Product GetProductOnPageByTitle(string title) { return _data.GetProductByTitle(title); }
 
 
     }
